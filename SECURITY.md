@@ -71,8 +71,11 @@ A patient-records REST API built with Node.js and Express, packaged with Docker 
 - Add multi-factor authentication, token refresh and revocation, and centralized log storage.
 - Add DAST (for example OWASP ZAP) against the running app, and image signing.
 - This demo satisfies technical safeguards only. HIPAA also requires administrative and physical safeguards, staff training and signed business associate agreements.
+
 ## Triaged scan findings
 
 | Tool | Finding | Decision | Reason |
 |---|---|---|---|
-| Semgrep | express-check-csurf-middleware-usage | Suppressed (false positive) | Authentication uses Bearer JWT in the Authorization header, not cookies, so CSRF attacks do not apply. |
+| Semgrep | express-check-csurf-middleware-usage | Excluded (false positive) | Authentication uses Bearer JWT in the Authorization header, not cookies, so CSRF attacks do not apply. The rule is excluded in the Jenkinsfile. |
+| Trivy | 7 OS package CVEs (openssl, musl, zlib) | Fixed | `apk upgrade` in the Dockerfile pulls patched versions |
+| Trivy | 22 CVEs in npm's bundled packages (tar, minimatch, etc.) | Fixed | npm is not needed at runtime, so it is removed from the image |
