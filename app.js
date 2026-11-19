@@ -4,6 +4,8 @@ const rateLimit = require("express-rate-limit");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+// nosemgrep: javascript.express.security.audit.express-check-csurf-middleware-usage
+// Justification: API uses Bearer-token (Authorization header) auth, not cookies, so CSRF does not apply.
 const app = express();
 app.disable("x-powered-by");
 app.use(helmet());
